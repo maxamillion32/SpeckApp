@@ -1,0 +1,30 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>Beacon-Verwaltung</ion-title>
+	</ion-navbar>
+
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="icons">
+      <ion-segment-button value="all">
+        <ion-icon name="list"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="filtered">
+        <ion-icon name="color-filter"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+	<ion-list>
+		<ion-item *ngFor="let beacon of beacons">
+			<ion-avatar item-left>
+				<ion-icon name="radio-button-on" class="custom-icon"></ion-icon>
+			</ion-avatar>
+      <h2>{{beacon.name}}</h2>
+      <p>UUID: {{beacon.id}}</p>			
+		</ion-item>
+	</ion-list>
+
+</ion-content>

@@ -1,0 +1,20 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>Maschinen-Verwaltung</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+	<ion-list>
+		<ion-item *ngFor="let machine of machines">
+			<ion-avatar item-left>
+				<ion-icon name="radio-button-on" class="custom-icon"></ion-icon>
+			</ion-avatar>
+			<h2>{{machine.name}}</h2>
+			<p>Beacons: {{machine.countBeacons}}</p>
+      <button ion-button clear item-right>Open ...</button>
+		</ion-item>
+	</ion-list>
+
+</ion-content>
