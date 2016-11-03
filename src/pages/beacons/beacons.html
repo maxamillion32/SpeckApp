@@ -1,7 +1,7 @@
 <ion-header>
-	<ion-navbar>
-		<ion-title>Beacon-Verwaltung</ion-title>
-	</ion-navbar>
+  <ion-navbar>
+    <ion-title>Beacon-Verwaltung</ion-title>
+  </ion-navbar>
 
   <ion-toolbar>
     <ion-segment [(ngModel)]="icons">
@@ -17,14 +17,22 @@
 
 <ion-content padding>
 
-	<ion-list>
-		<ion-item *ngFor="let beacon of beacons">
-			<ion-avatar item-left>
-				<ion-icon name="radio-button-on" class="custom-icon"></ion-icon>
-			</ion-avatar>
-      <h2>{{beacon.name}}</h2>
-      <p>UUID: {{beacon.id}}</p>			
-		</ion-item>
-	</ion-list>
+  <ion-list>   
+
+    <ion-card *ngFor="let beacon of beacons">
+      <ion-item>
+        <ion-icon name="radio-button-on" item-left large></ion-icon>
+        <h2>{{beacon.name}}</h2>
+        <p>UUID: {{beacon.id}}</p>
+        <p>RSSI: {{beacon.rssi}}</p>
+      </ion-item>
+
+      <button primary clear small>
+        <ion-icon name="thumbs-up"></ion-icon>
+        <div>12 Likes</div>
+      </button>
+    </ion-card>
+
+  </ion-list>
 
 </ion-content>

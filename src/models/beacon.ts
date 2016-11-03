@@ -1,12 +1,15 @@
 
 export class Beacon {
-    id: number;
+    id: string;
     name: string;
+    rssi: number;
     
-    constructor(id: number, name: string) {
+    constructor(id: string, name: string, rssi: number) {
         this.id = id;
         this.name = name;
+        this.rssi = rssi;
 
-        console.log('Instantiated beacon with id ' + this.id + ' and name ' + this.name);
+        console.log('Instantiated beacon with the following values:');
+        console.log(JSON.stringify(this)); 
     }
 }

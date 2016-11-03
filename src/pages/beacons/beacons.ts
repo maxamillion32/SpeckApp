@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { Beacon } from '../../models/beacon'
-
+import { Beacon } from '../../models/beacon';
+import { BLE } from 'ionic-native';
 
 
 @Component({
@@ -11,16 +11,24 @@ import { Beacon } from '../../models/beacon'
 export class BeaconsPage {
 
   beacons: any;
+  icons: any;
 
   constructor(public navCtrl: NavController) {
     this.beacons = [];
-    this.createSampleData();
+    this.icons = 'something';
+    this.startScan();
   }
 
-  createSampleData() {
-    for (var i = 0; i < 10; i++) {
-      let beaconObject = new Beacon(i, "Beacon " + i);
-      this.beacons.push(beaconObject);
-    }
+  startScan() {
+    BLE.startScan([]).subscribe(device => {
+      let beacon = new Beacon(device.id, device.name, device.rssi);
+      this.beacons.push(device);
+    });
+
+    setTimeout(() => {
+      BLE.stopScan().then(() => {
+        console.log(JSON.stringify(this.beacons))
+      });
+    }, 3000);
   }
 }
