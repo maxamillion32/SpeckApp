@@ -22,7 +22,7 @@ export class BeaconsPage {
   startScan() {
     BLE.startScan([]).subscribe(device => {
       let beacon = new Beacon(device.id, device.name, device.rssi);
-      this.beacons.push(device);
+      this.beacons.push(beacon);
     });
 
     setTimeout(() => {
