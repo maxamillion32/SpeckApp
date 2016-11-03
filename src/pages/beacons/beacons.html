@@ -1,38 +1,35 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>Beacon-Verwaltung</ion-title>
-  </ion-navbar>
-
-  <ion-toolbar>
-    <ion-segment [(ngModel)]="icons">
-      <ion-segment-button value="all">
-        <ion-icon name="list"></ion-icon>
-      </ion-segment-button>
-      <ion-segment-button value="filtered">
-        <ion-icon name="color-filter"></ion-icon>
-      </ion-segment-button>
-    </ion-segment>
-  </ion-toolbar>
+	<ion-navbar>
+		<ion-title>Beacon-Verwaltung</ion-title>
+	</ion-navbar>
 </ion-header>
 
 <ion-content padding>
 
-  <ion-list>   
+	<button ion-button full (click)="startScan()">Scan ...</button>
 
-    <ion-card *ngFor="let beacon of beacons">
-      <ion-item>
-        <ion-icon name="radio-button-on" item-left large></ion-icon>
-        <h2>{{beacon.name}}</h2>
-        <p>UUID: {{beacon.id}}</p>
-        <p>RSSI: {{beacon.rssi}}</p>
-      </ion-item>
+	<ion-list>
 
-      <button primary clear small>
-        <ion-icon name="thumbs-up"></ion-icon>
-        <div>12 Likes</div>
-      </button>
-    </ion-card>
+		<ion-card *ngFor="let beacon of beacons">
 
-  </ion-list>
+			<ion-item>
+				<ion-icon color="{{beacon.getColor()}}" name="disc" item-left large></ion-icon>
+				<h2 color="{{beacon.getColor()}}">{{beacon.name}}</h2>
+			</ion-item>
+
+			<hr/>
+
+			<ion-item>
+				<ion-icon name="information" item-left></ion-icon>
+				<p>{{beacon.id}}</p>
+			</ion-item>
+
+			<ion-item>
+				<ion-icon name="wifi" item-left></ion-icon>
+				<p>{{beacon.rssi}}</p>
+			</ion-item>
+		</ion-card>
+
+	</ion-list>
 
 </ion-content>

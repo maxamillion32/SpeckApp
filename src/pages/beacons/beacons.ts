@@ -1,25 +1,31 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, LoadingController } from 'ionic-angular';
 import { Beacon } from '../../models/beacon';
 import { BLE } from 'ionic-native';
-
+import { Messages } from '../../app/app.messages';
+import { LoadingPageBase } from '../base/loadingPageBase';
 
 @Component({
   selector: 'page-beacons',
   templateUrl: 'beacons.html'
 })
-export class BeaconsPage {
+export class BeaconsPage extends LoadingPageBase {
 
   beacons: any;
   icons: any;
+  scanDuraction: number;
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, loadingCtrl: LoadingController) {
+    super(loadingCtrl);
     this.beacons = [];
     this.icons = 'something';
-    this.startScan();
+    this.startScanBeacons();
   }
 
-  startScan() {
+  startScanBeacons() {
+    this.beacons = [];
+    this.showLoadingCtrl(Messages.SCAN_FOR_BEACONS, 3000);
+
     BLE.startScan([]).subscribe(device => {
       let beacon = new Beacon(device.id, device.name, device.rssi);
       this.beacons.push(beacon);
@@ -29,6 +35,9 @@ export class BeaconsPage {
       BLE.stopScan().then(() => {
         console.log(JSON.stringify(this.beacons))
       });
-    }, 3000);
+    }, this.scanDuraction);
+
+
+    //this.beacons.push(new Beacon("Test", "Test", -91));
   }
 }
