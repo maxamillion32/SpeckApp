@@ -22,4 +22,8 @@ export class MachinesPage {
       this.machines.push(machine);
     }
   }
+
+  addMachine(){
+    
+  }
 }

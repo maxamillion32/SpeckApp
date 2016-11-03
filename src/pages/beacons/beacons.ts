@@ -47,13 +47,13 @@ export class BeaconsPage extends Pagebase {
   onDelete() {
     this.showAlert("Delete", "Really delete?", [
       {
-        text: 'Yes',        
+        text: 'Yes',
         handler: data => {
           console.log('Yes clicked');
         }
       },
       {
-        text: 'No',        
+        text: 'No',
         handler: data => {
           console.log('No clicked');
         }

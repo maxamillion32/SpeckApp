@@ -1,7 +1,7 @@
 <ion-header>
-	<ion-navbar>
+	<!--<ion-navbar>
 		<ion-title>Maschinen-Verwaltung</ion-title>
-	</ion-navbar>
+	</ion-navbar>-->
 </ion-header>
 
 <ion-content padding>
@@ -13,8 +13,13 @@
 			</ion-avatar>
 			<h2>{{machine.name}}</h2>
 			<p>Beacons: {{machine.countBeacons}}</p>
-      <button ion-button clear item-right>Open ...</button>
+			<button ion-button clear item-right>Open ...</button>
 		</ion-item>
 	</ion-list>
 
+	<ion-fab bottom right>
+		<button ion-fab color="secondary">
+			<ion-icon name="add" (click)="addMachine()"></ion-icon>
+		</button>
+	</ion-fab>
 </ion-content>
