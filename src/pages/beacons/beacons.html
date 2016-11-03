@@ -1,16 +1,24 @@
 <ion-header>
-	<ion-navbar>
+	<!--<ion-navbar>
 		<ion-title>Beacon-Verwaltung</ion-title>
-	</ion-navbar>
+	</ion-navbar>-->
+	<ion-toolbar>
+		<ion-title>Beacons</ion-title>
+		<ion-buttons start>
+			<button ion-button color="primary" icon-only (click)="startScanBeacons()">
+        		<ion-icon name="refresh"></ion-icon>
+      		</button>
+		</ion-buttons>
+	</ion-toolbar>
 </ion-header>
 
 <ion-content padding>
 
-	<button ion-button full (click)="startScan()">Scan ...</button>
+	<ion-searchbar placeholder="Search for uuids ..." [showCancelButton]="true"></ion-searchbar>
 
 	<ion-list>
 
-		<ion-card *ngFor="let beacon of beacons">
+		<ion-card *ngFor="let beacon of beacons" (swipe)="onSwipe(beacon)">
 
 			<ion-item>
 				<ion-icon color="{{beacon.getColor()}}" name="disc" item-left large></ion-icon>
@@ -31,5 +39,16 @@
 		</ion-card>
 
 	</ion-list>
+
+	<ion-fab bottom right>
+		<button ion-fab>
+			<ion-icon name="menu"></ion-icon>
+		</button>
+		<ion-fab-list side="top">
+			<button ion-fab color="primary" (click)="onDelete()">
+				<ion-icon name="trash"></ion-icon>
+			</button>
+		</ion-fab-list>
+	</ion-fab>
 
 </ion-content>

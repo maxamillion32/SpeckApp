@@ -1,25 +1,26 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController } from 'ionic-angular';
+import { NavController, LoadingController, AlertController } from 'ionic-angular';
 import { Beacon } from '../../models/beacon';
 import { BLE } from 'ionic-native';
 import { Messages } from '../../app/app.messages';
-import { LoadingPageBase } from '../base/loadingPageBase';
+import { Pagebase } from '../base/pageBase';
 
 @Component({
   selector: 'page-beacons',
   templateUrl: 'beacons.html'
 })
-export class BeaconsPage extends LoadingPageBase {
+export class BeaconsPage extends Pagebase {
 
   beacons: any;
   icons: any;
   scanDuraction: number;
 
-  constructor(public navCtrl: NavController, loadingCtrl: LoadingController) {
-    super(loadingCtrl);
+  constructor(public navCtrl: NavController, loadingCtrl: LoadingController, alertCtrl: AlertController) {
+    super(loadingCtrl, alertCtrl);
     this.beacons = [];
     this.icons = 'something';
-    this.startScanBeacons();
+    this.beacons.push(new Beacon("Test", "Test", -91));
+    //this.startScanBeacons();
   }
 
   startScanBeacons() {
@@ -36,8 +37,27 @@ export class BeaconsPage extends LoadingPageBase {
         console.log(JSON.stringify(this.beacons))
       });
     }, this.scanDuraction);
+  }
 
+  onSwipe(beacon: Beacon) {
+    console.log('swiped');
+    console.log(JSON.stringify(beacon));
+  }
 
-    //this.beacons.push(new Beacon("Test", "Test", -91));
+  onDelete() {
+    this.showAlert("Delete", "Really delete?", [
+      {
+        text: 'Yes',        
+        handler: data => {
+          console.log('Yes clicked');
+        }
+      },
+      {
+        text: 'No',        
+        handler: data => {
+          console.log('No clicked');
+        }
+      }
+    ]);
   }
 }
