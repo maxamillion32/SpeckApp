@@ -11,9 +11,11 @@ import { Beacon } from '../../models/beacon'
 export class BeaconsPage {
 
   beacons: any;
+  icons: any;
 
   constructor(public navCtrl: NavController) {
     this.beacons = [];
+    this.icons = 'something';
     this.createSampleData();
   }
 
