@@ -36,6 +36,11 @@
 				<ion-icon name="wifi" item-left></ion-icon>
 				<p>{{beacon.rssi}}</p>
 			</ion-item>
+
+			<ion-item [hidden]="beacon.isReachable">
+				<ion-icon name="close-circle" color="danger" item-left></ion-icon>
+				<p>Not reachable!</p>
+			</ion-item>
 		</ion-card>
 
 	</ion-list>

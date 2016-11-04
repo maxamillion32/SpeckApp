@@ -9,6 +9,8 @@ export class Beacon {
     nid: string;
     bid: string;
     rfu: string;
+    lastUpdated: Date;
+    isReachable: boolean;
 
     constructor(id: string, name: string, rssi: string, frameType: string, rangingData: string, nid: string, bid: string, rfu: string) {
         this.id = id;
@@ -18,7 +20,8 @@ export class Beacon {
         this.rangingData = rangingData;
         this.nid = nid;
         this.bid = bid;
-        this.rfu = rfu;
+        this.rfu = rfu;     
+        this.isReachable = true;   
 
         // console.log('Instantiated beacon with the following values:');
         // console.log(JSON.stringify(this));

@@ -115,9 +115,9 @@ export class BeaconService {
                 // console.log('rangingData = ' + this.rangingData);
                 // console.log('nid = ' + this.nid);
                 // console.log('bid = ' + this.bid);
-                // console.log('rfu = ' + this.rfu);
-                this.updateBeaconsArray();
+                // console.log('rfu = ' + this.rfu);                
             }
+            this.updateBeaconsArray();
         });
 
         console.log('return this.beacons from service');
@@ -142,13 +142,27 @@ export class BeaconService {
                 beacon.rssi = this.rssi;
                 beacon.rfu = this.rfu;
                 beacon.rangingData = this.rangingData;
+                beacon.lastUpdated = new Date();
+                beacon.isReachable = true;
+
                 beaconIsAvailable = true;
+            }
+
+            var delta = this.calculateDateTimeDelta(new Date(), beacon.lastUpdated);
+            if (delta.getSeconds() > 2) {
+                beacon.isReachable = false;
             }
         }
 
         if (!beaconIsAvailable) {
             let beacon = new Beacon(this.id, this.name, this.rssi, this.frametype, this.rangingData, this.nid, this.bid, this.rfu);
+            beacon.lastUpdated = new Date();
             this.beacons.push(beacon);
         }
+    }
+
+    calculateDateTimeDelta(date1: Date, date2: Date) {
+        var delta = +(date1) - +(date2);
+        return new Date(delta);
     }
 }
