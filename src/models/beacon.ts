@@ -20,8 +20,8 @@ export class Beacon {
         this.bid = bid;
         this.rfu = rfu;
 
-        console.log('Instantiated beacon with the following values:');
-        console.log(JSON.stringify(this));
+        // console.log('Instantiated beacon with the following values:');
+        // console.log(JSON.stringify(this));
     }
 
     getColor() {

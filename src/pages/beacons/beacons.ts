@@ -32,7 +32,15 @@ export class BeaconsPage extends Pagebase {
   }
 
   startScanBeacons() {
-    this.beacons = this.beaconService.scanForBeacons();
+    setInterval(() => {
+      console.log('Scanning ...')
+
+      this.beacons = this.beaconService.scanForBeacons();
+
+      console.log('this.beacons after scanning:');
+      console.log(JSON.stringify(this.beacons));
+    }, 200);
+
   }
 
   // startScanBeacons() {

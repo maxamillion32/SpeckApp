@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { Beacon } from '../models/beacon';
 import { BLE } from 'ionic-native';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class BeaconService {
-    beacons: any;
+    beacons: Beacon[];
     platform: Platform;
     frametype: string;
     rangingData: string;
@@ -17,13 +18,17 @@ export class BeaconService {
     id: string;
 
     constructor(platform: Platform) {
-        this.beacons = [];
+        this.beacons = new Array<Beacon>();
         this.platform = platform;
     }
 
     scanForBeacons() {
+        console.log('Clearing this.beacons in Service');
 
-        BLE.scan(['FEAA'], 1).subscribe(device => {
+        //this.beacons = [];        
+        BLE.scan(['FEAA'], 0.1).subscribe(device => {
+
+            console.log('found device!');
 
             this.frametype = "";
             this.rangingData = "";
@@ -35,6 +40,8 @@ export class BeaconService {
             this.id = device.id;
 
             if (this.platform.is('ios')) {
+
+                console.log('Platform is iOS');
 
                 var rawData = new Uint8Array(device.advertising.kCBAdvDataServiceData['FEAA'])
 
@@ -62,20 +69,19 @@ export class BeaconService {
                 }
 
 
-                console.log('id = ' + this.id);
-                console.log('rssi = ' + this.rssi);
-                console.log('name = ' + this.name);
-                console.log('frametype = ' + this.frametype);
-                console.log('rangingData = ' + this.rangingData);
-                console.log('nid = ' + this.nid);
-                console.log('bid = ' + this.bid);
-                console.log('rfu = ' + this.rfu);
-
-                let beacon = new Beacon(this.id, this.name, this.rssi, this.frametype, this.rangingData, this.nid, this.bid, this.rfu);
-                this.beacons.push(beacon);
+                // console.log('id = ' + this.id);
+                // console.log('rssi = ' + this.rssi);
+                // console.log('name = ' + this.name);
+                // console.log('frametype = ' + this.frametype);
+                // console.log('rangingData = ' + this.rangingData);
+                // console.log('nid = ' + this.nid);
+                // console.log('bid = ' + this.bid);
+                // console.log('rfu = ' + this.rfu);
             }
 
             else if (this.platform.is('android')) {
+
+                console.log('Platform is android');
 
                 var rawData = new Uint8Array(device.advertising)
 
@@ -102,21 +108,47 @@ export class BeaconService {
 
                 }
 
-                console.log('id = ' + this.id);
-                console.log('rssi = ' + this.rssi);
-                console.log('name = ' + this.name);
-                console.log('frametype = ' + this.frametype);
-                console.log('rangingData = ' + this.rangingData);
-                console.log('nid = ' + this.nid);
-                console.log('bid = ' + this.bid);
-                console.log('rfu = ' + this.rfu);
-
-                let beacon = new Beacon(this.id, this.name, this.rssi, this.frametype, this.rangingData, this.nid, this.bid, this.rfu);
-                this.beacons.push(beacon);
+                // console.log('id = ' + this.id);
+                // console.log('rssi = ' + this.rssi);
+                // console.log('name = ' + this.name);
+                // console.log('frametype = ' + this.frametype);
+                // console.log('rangingData = ' + this.rangingData);
+                // console.log('nid = ' + this.nid);
+                // console.log('bid = ' + this.bid);
+                // console.log('rfu = ' + this.rfu);
+                this.updateBeaconsArray();
             }
-
         });
 
+        console.log('return this.beacons from service');
         return this.beacons;
+    }
+
+    updateBeaconsArray() {
+
+        if (this.beacons.length == 0) {
+            let beacon = new Beacon(this.id, this.name, this.rssi, this.frametype, this.rangingData, this.nid, this.bid, this.rfu);
+            this.beacons.push(beacon);
+        }
+
+        var beaconIsAvailable = false;
+
+        for (let beacon of this.beacons) {
+
+            if (beacon.id == this.id) {
+                beacon.nid = this.nid;
+                beacon.bid = this.bid;
+                beacon.frameType = this.frametype;
+                beacon.rssi = this.rssi;
+                beacon.rfu = this.rfu;
+                beacon.rangingData = this.rangingData;
+                beaconIsAvailable = true;
+            }
+        }
+
+        if (!beaconIsAvailable) {
+            let beacon = new Beacon(this.id, this.name, this.rssi, this.frametype, this.rangingData, this.nid, this.bid, this.rfu);
+            this.beacons.push(beacon);
+        }
     }
 }
