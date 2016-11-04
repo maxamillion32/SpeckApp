@@ -19,8 +19,8 @@ export class BeaconsPage extends Pagebase {
     super(loadingCtrl, alertCtrl);
     this.beacons = [];
     this.icons = 'something';
-    this.beacons.push(new Beacon("Test", "Test", -91));
-    //this.startScanBeacons();
+    //this.beacons.push(new Beacon("Test", "Test", -91));
+    this.startScanBeacons();
   }
 
   startScanBeacons() {
@@ -36,7 +36,7 @@ export class BeaconsPage extends Pagebase {
       BLE.stopScan().then(() => {
         console.log(JSON.stringify(this.beacons))
       });
-    }, this.scanDuraction);
+    }, 3000);
   }
 
   onSwipe(beacon: Beacon) {
