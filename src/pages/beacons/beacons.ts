@@ -4,10 +4,12 @@ import { Beacon } from '../../models/beacon';
 import { BLE } from 'ionic-native';
 import { Messages } from '../../app/app.messages';
 import { Pagebase } from '../base/pageBase';
+import { StringByteConverterService } from '../../services/StringByteConverterService';
 
 @Component({
   selector: 'page-beacons',
-  templateUrl: 'beacons.html'
+  templateUrl: 'beacons.html',
+  providers: [StringByteConverterService]
 })
 export class BeaconsPage extends Pagebase {
 
@@ -15,7 +17,7 @@ export class BeaconsPage extends Pagebase {
   icons: any;
   scanDuraction: number;
 
-  constructor(public navCtrl: NavController, loadingCtrl: LoadingController, alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, loadingCtrl: LoadingController, alertCtrl: AlertController, private stringByteConverterService: StringByteConverterService) {
     super(loadingCtrl, alertCtrl);
     this.beacons = [];
     this.icons = 'something';
@@ -28,6 +30,13 @@ export class BeaconsPage extends Pagebase {
     this.showLoadingCtrl(Messages.SCAN_FOR_BEACONS, 3000);
 
     BLE.startScan([]).subscribe(device => {
+
+      // var adData = new Uint8Array(device.advertising);
+      // console.log(adData);
+      // var stringRepresentation = this.stringByteConverterService.bytesToString(adData);
+      // console.log('String representation:')
+      // console.log(stringRepresentation);
+
       let beacon = new Beacon(device.id, device.name, device.rssi);
       this.beacons.push(beacon);
     });
