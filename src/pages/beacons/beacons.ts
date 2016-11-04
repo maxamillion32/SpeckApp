@@ -1,70 +1,59 @@
 import { Component } from '@angular/core';
 import { NavController, LoadingController, AlertController } from 'ionic-angular';
 import { Beacon } from '../../models/beacon';
-import { BLE } from 'ionic-native';
-import { Messages } from '../../app/app.messages';
 import { Pagebase } from '../base/pageBase';
-import { StringByteConverterService } from '../../services/StringByteConverterService';
 import { BeaconService } from '../../services/beaconService';
 
 @Component({
   selector: 'page-beacons',
   templateUrl: 'beacons.html',
-  providers: [StringByteConverterService, BeaconService]
+  providers: [BeaconService]
 })
 export class BeaconsPage extends Pagebase {
 
   beacons: any;
   icons: any;
-  scanDuraction: number;
 
   constructor(public navCtrl: NavController,
     loadingCtrl: LoadingController,
     alertCtrl: AlertController,
-    private stringByteConverterService: StringByteConverterService,
     private beaconService: BeaconService) {
 
     super(loadingCtrl, alertCtrl);
     this.beacons = [];
     this.icons = 'something';
-    //this.beacons.push(new Beacon("Test", "Test", -91));
+
     this.startScanBeacons();
+    this.checkForUnreachableBeacons();
   }
 
   startScanBeacons() {
+
     setInterval(() => {
-      console.log('Scanning ...')
-
       this.beacons = this.beaconService.scanForBeacons();
-
-      console.log('this.beacons after scanning:');
-      console.log(JSON.stringify(this.beacons));
     }, 200);
 
   }
 
-  // startScanBeacons() {
-  //   this.beacons = [];
-  //   this.showLoadingCtrl(Messages.SCAN_FOR_BEACONS, 3000);
+  checkForUnreachableBeacons() {
 
-  //   BLE.startScan([]).subscribe(device => {
+    setInterval(() => {
+      for (let beacon of this.beacons) {
 
-  //     var adData = new Uint8Array(device.advertising);
-  //     console.log(adData);
-  //     var stringRepresentation = this.stringByteConverterService.bytesToString(adData);
-  //     console.log('String representation:')
-  //     console.log(stringRepresentation);
+        var dateTimeDelta = this.calculateDateTimeDelta(new Date(), beacon.lastUpdated);
 
-  //     let beacon = new Beacon(device.id, device.name, device.rssi);
-  //     this.beacons.push(beacon);
-  //   });
+        if (dateTimeDelta.getSeconds() >= 3) {
+          beacon.isReachable = false;
+        }
 
-  //   setTimeout(() => {
-  //     BLE.stopScan().then(() => {
-  //       console.log(JSON.stringify(this.beacons))
-  //     });
-  //   }, 3000);
-  // }
+      }
+    }, 1000);
+  }
+
+  calculateDateTimeDelta(date1: Date, date2: Date) {
+    var dateTimeDelta = +(date1) - +(date2);
+    return new Date(dateTimeDelta);
+  }
 
   onSwipe(beacon: Beacon) {
     console.log('swiped');

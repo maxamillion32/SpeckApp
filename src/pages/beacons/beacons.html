@@ -4,43 +4,55 @@
 	</ion-navbar>-->
 	<ion-toolbar>
 		<ion-title>Beacons</ion-title>
-		<ion-buttons start>
+		<!--<ion-buttons start>
 			<button ion-button color="primary" icon-only (click)="startScanBeacons()">
         		<ion-icon name="refresh"></ion-icon>
       		</button>
-		</ion-buttons>
+		</ion-buttons>-->
 	</ion-toolbar>
 </ion-header>
 
 <ion-content padding>
 
-	<ion-searchbar placeholder="Search for uuids ..." [showCancelButton]="true"></ion-searchbar>
-
 	<ion-list>
 
 		<ion-card *ngFor="let beacon of beacons" (swipe)="onSwipe(beacon)">
 
-			<ion-item>
-				<ion-icon color="{{beacon.getColor()}}" name="disc" item-left large></ion-icon>
-				<h2 color="{{beacon.getColor()}}">{{beacon.nid}} / {{beacon.bid}}</h2>
-			</ion-item>
+			<ion-card-header>
+				<ion-item>
+					<ion-icon color="{{beacon.getColor()}}" name="disc" item-left large></ion-icon>
+					<h2 color="{{beacon.getColor()}}">{{beacon.uniqueId}}</h2>
+				</ion-item>
 
-			<hr/>
+				<ion-item [hidden]="beacon.isReachable">
+					<ion-icon name="close-circle" color="danger" item-left></ion-icon>
+					<p>Not reachable!</p>
+				</ion-item>
+			</ion-card-header>
 
-			<ion-item>
-				<ion-icon name="information" item-left></ion-icon>
-				<p>{{beacon.id}}</p>
-			</ion-item>
+			<ion-card-content>
+				<ion-item>
+					<ion-icon name="wifi" item-left></ion-icon>
+					<p>{{beacon.rssi}}</p>
+				</ion-item>
 
-			<ion-item>
-				<ion-icon name="wifi" item-left></ion-icon>
-				<p>{{beacon.rssi}}</p>
-			</ion-item>
+				<ion-item>
+					<h2>Namespace-Id:</h2>
+					<p>{{beacon.nid}}</p>
+				</ion-item>
 
-			<ion-item [hidden]="beacon.isReachable">
-				<ion-icon name="close-circle" color="danger" item-left></ion-icon>
-				<p>Not reachable!</p>
-			</ion-item>
+				<ion-item>
+					<h2>Instance-Id:</h2>
+					<p>{{beacon.bid}}</p>
+				</ion-item>
+
+				<ion-item>
+					<ion-icon name="time"></ion-icon>
+					<p>{{beacon.lastUpdated}}</p>
+				</ion-item>
+
+			</ion-card-content>
+
 		</ion-card>
 
 	</ion-list>

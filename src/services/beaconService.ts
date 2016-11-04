@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { Beacon } from '../models/beacon';
 import { BLE } from 'ionic-native';
-import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class BeaconService {
@@ -14,7 +13,7 @@ export class BeaconService {
     bid: string;
     rfu: string;
     name: string;
-    rssi: string;
+    rssi: number;
     id: string;
 
     constructor(platform: Platform) {
@@ -23,9 +22,7 @@ export class BeaconService {
     }
 
     scanForBeacons() {
-        console.log('Clearing this.beacons in Service');
 
-        //this.beacons = [];        
         BLE.scan(['FEAA'], 0.1).subscribe(device => {
 
             console.log('found device!');
@@ -147,22 +144,11 @@ export class BeaconService {
 
                 beaconIsAvailable = true;
             }
-
-            var delta = this.calculateDateTimeDelta(new Date(), beacon.lastUpdated);
-            if (delta.getSeconds() > 2) {
-                beacon.isReachable = false;
-            }
         }
 
         if (!beaconIsAvailable) {
             let beacon = new Beacon(this.id, this.name, this.rssi, this.frametype, this.rangingData, this.nid, this.bid, this.rfu);
-            beacon.lastUpdated = new Date();
             this.beacons.push(beacon);
         }
-    }
-
-    calculateDateTimeDelta(date1: Date, date2: Date) {
-        var delta = +(date1) - +(date2);
-        return new Date(delta);
     }
 }
