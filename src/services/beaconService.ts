@@ -16,13 +16,21 @@ export class BeaconService {
     rssi: number;
     id: string;
 
+
+
     constructor(platform: Platform) {
         this.beacons = new Array<Beacon>();
         this.platform = platform;
     }
 
+
+    /**
+     * scanForBeacons is scanning for eddystone beacons and will store them into the beacons array.
+     * Beacons will be sorted by rssi.
+     */
     scanForBeacons() {
 
+        // Scan for 'FEEA' because we want only eddystone beacons
         BLE.scan(['FEAA'], 0.1).subscribe(device => {
 
             console.log('found device!');
@@ -36,10 +44,13 @@ export class BeaconService {
             this.rssi = device.rssi;
             this.id = device.id;
 
+            // For iOS the rssi may be 127.
+            // In this case an error ocurred.
             if (this.rssi > 0) {
                 return;
             }
 
+            // Getting data for iOS
             if (this.platform.is('ios')) {
 
                 console.log('Platform is iOS');
@@ -87,6 +98,7 @@ export class BeaconService {
 
             }
 
+            // Getting data for android
             else if (this.platform.is('android')) {
 
                 console.log('Platform is android');
@@ -140,7 +152,7 @@ export class BeaconService {
 
         console.log('return this.beacons from service');
 
-        // Sorting of the beacons by rssi value.
+        // Sorting of beacons by rssi value.
         this.beacons.sort((a, b) => {
 
             if (a.rssi > b.rssi) {
@@ -157,6 +169,11 @@ export class BeaconService {
         return this.beacons;
     }
 
+
+    /**
+     * updateBeaconsArray will insert a new beacon or update values
+     * if this beacon already exist.
+     */
     updateBeaconsArray() {
 
         if (this.beacons.length == 0) {
