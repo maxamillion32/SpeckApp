@@ -34,7 +34,7 @@ export class Beacon {
         if (this.rssi > -65) {
             return "secondary";
         }
-        if (this.rssi > -100) {
+        if (this.rssi > -80) {
             return "orange";
         }
         return "danger";
