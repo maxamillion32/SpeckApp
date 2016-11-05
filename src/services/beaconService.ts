@@ -36,6 +36,10 @@ export class BeaconService {
             this.rssi = device.rssi;
             this.id = device.id;
 
+            if (this.rssi > 0) {
+                return;
+            }
+
             if (this.platform.is('ios')) {
 
                 console.log('Platform is iOS');
@@ -127,12 +131,29 @@ export class BeaconService {
                     }
 
                 }
-               
+
             }
             this.updateBeaconsArray();
         });
 
+
+
         console.log('return this.beacons from service');
+
+        // Sorting of the beacons by rssi value.
+        this.beacons.sort((a, b) => {
+
+            if (a.rssi > b.rssi) {
+                return -1;
+            }
+
+            if (a.rssi < b.rssi) {
+                return 1;
+            }
+
+            return 0;
+        });
+
         return this.beacons;
     }
 
