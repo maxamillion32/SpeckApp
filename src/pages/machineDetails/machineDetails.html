@@ -39,47 +39,41 @@
 		<ion-list>
 
 			<!-- Show Information of first beacon -->
-			
+
 			<ion-item>
 				<ion-card>
 					<ion-card-header>
 						<ion-item *ngIf="!beacon1.isDummy">
-							<ion-icon name="disc" item-left > {{beacon1.id}}</ion-icon>
+							<ion-icon name="disc" item-left> {{beacon1.id}}</ion-icon>
 							<button ion-button clear icon-only item-right (click)="removeFirstBeaconFromMachine()">
-        				<ion-icon name="trash"></ion-icon>
-      				</button>
+        						<ion-icon name="trash"></ion-icon>
+      						</button>
 						</ion-item>
 						<ion-item *ngIf="beacon1.isDummy">
-							<ion-icon name="disc" item-left > New...</ion-icon>
-							<button ion-button clear icon-only item-right>
-        				<ion-icon name="add"></ion-icon>
-      				</button>
+							<ion-icon name="disc" item-left> New...</ion-icon>
 						</ion-item>
 					</ion-card-header>
 				</ion-card>
 			</ion-item>
-      		<!-- Show Information of second beacon -->
-	  
+			<!-- Show Information of second beacon -->
+
 			<ion-item>
 				<ion-card>
 					<ion-card-header>
 						<ion-item *ngIf="!beacon2.isDummy">
 							<ion-icon name="disc" item-left> {{beacon2.id}}</ion-icon>
 							<button ion-button clear icon-only item-right (click)="removeSecondBeaconFromMachine()">
-        				<ion-icon name="trash"></ion-icon>
-      				</button>
+        						<ion-icon name="trash"></ion-icon>
+      						</button>
 						</ion-item>
 						<ion-item *ngIf="beacon2.isDummy">
 							<ion-icon name="disc" item-left> New...</ion-icon>
-							<button ion-button clear icon-only item-right >
-        				<ion-icon name="add"></ion-icon>
-      				</button>
 						</ion-item>
 					</ion-card-header>
 				</ion-card>
 			</ion-item>
 		</ion-list>
 	</ion-card>
-	
+
 
 </ion-content>

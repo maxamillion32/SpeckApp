@@ -102,8 +102,8 @@ export class MachinesPage extends Pagebase {
 
     let itemIndex = this.machines.length + 1;
     let selectedMachine = new Machine(itemIndex, "Neu " + itemIndex, "Typ " + itemIndex, "This is a new machine..");
-    selectedMachine.assignedBeacons.push(new Beacon("Dummy", "Dummy", 0, "", "", "", "", "", true));
-    selectedMachine.assignedBeacons.push(new Beacon("EchterBeacon", "EchterTyp", 0, "", "", "", "", "", false));
+    selectedMachine.assignedBeacons.push(new Beacon("Dummy1", "Dummy1", 0, "", "", "", "", "", true));
+    selectedMachine.assignedBeacons.push(new Beacon("Dummy2", "Dummy2", 0, "", "", "", "", "", true));
 
     this.navCtrl.push(MachineDetailsPage, { machine: selectedMachine, isNew: true });
 

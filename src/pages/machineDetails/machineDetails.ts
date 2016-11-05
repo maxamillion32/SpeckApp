@@ -110,14 +110,6 @@ export class MachineDetailsPage extends Pagebase {
         prompt.present();
     }
 
-    addFirstBeaconToMachine() {
-
-    }
-
-    addSecondBeaconToMachine() {
-
-    }
-
     removeFirstBeaconFromMachine() {
 
         this.beacon1.isDummy = true;
