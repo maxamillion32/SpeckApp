@@ -6,8 +6,8 @@ The app is based on the Ionic Framework combined with Angular 2 and TypeScript.
 This project exclusively involves the usage of BLE-beacons that come with the Eddystone-standard.
 
 ## Usage
-Follow the steps described at https://ionicframework.com/docs/v2/getting-started/installation/
-Inside of the Project folder you have to install the dependencies with `npm install`
+Follow the steps described at https://ionicframework.com/docs/v2/getting-started/installation/.
+Inside of the Project folder you have to install the dependencies with `npm install`.
 
 ### iOS
 **ONLY** on OS X. Xcode is required.
