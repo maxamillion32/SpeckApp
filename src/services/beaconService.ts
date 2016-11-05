@@ -44,7 +44,11 @@ export class BeaconService {
 
                 for (var _i = 0; _i < rawData.length; _i++) {
                     if (_i == 0) {
-                        this.frametype = rawData[_i].toString(16);
+                        if (rawData[_i].toString(16).length == 1) {
+                            this.frametype = '0' + rawData[_i].toString(16);
+                        } else {
+                            this.frametype = rawData[_i].toString(16);
+                        }
                     }
 
                     if (_i == 1) {
@@ -52,28 +56,31 @@ export class BeaconService {
                     }
 
                     if (_i >= 2 && _i <= 11) {
-                        this.nid += rawData[_i].toString(16);
+                        if (rawData[_i].toString(16).length == 1) {
+                            this.nid += '0' + rawData[_i].toString(16);
+                        } else {
+                            this.nid += rawData[_i].toString(16);
+                        }
                     }
 
                     if (_i >= 12 && _i <= 17) {
-                        this.bid += rawData[_i].toString(16);
+                        if (rawData[_i].toString(16).length == 1) {
+                            this.bid += '0' + rawData[_i].toString(16);
+                        } else {
+                            this.bid += rawData[_i].toString(16);
+                        }
                     }
 
                     if (_i >= 18 && _i <= 19) {
-                        this.rfu += rawData[_i].toString(16);
+                        if (rawData[_i].toString(16).length == 1) {
+                            this.rfu += '0' + rawData[_i].toString(16);
+                        } else {
+                            this.rfu += rawData[_i].toString(16);
+                        }
                     }
 
                 }
 
-
-                // console.log('id = ' + this.id);
-                // console.log('rssi = ' + this.rssi);
-                // console.log('name = ' + this.name);
-                // console.log('frametype = ' + this.frametype);
-                // console.log('rangingData = ' + this.rangingData);
-                // console.log('nid = ' + this.nid);
-                // console.log('bid = ' + this.bid);
-                // console.log('rfu = ' + this.rfu);
             }
 
             else if (this.platform.is('android')) {
@@ -84,7 +91,11 @@ export class BeaconService {
 
                 for (var _i = 11; _i < rawData.length; _i++) {
                     if (_i == 11) {
-                        this.frametype = rawData[_i].toString(16);
+                        if (rawData[_i].toString(16).length == 1) {
+                            this.frametype = '0' + rawData[_i].toString(16);
+                        } else {
+                            this.frametype = rawData[_i].toString(16);
+                        }
                     }
 
                     if (_i == 12) {
@@ -92,27 +103,31 @@ export class BeaconService {
                     }
 
                     if (_i >= 13 && _i <= 22) {
-                        this.nid += rawData[_i].toString(16);
+                        if (rawData[_i].toString(16).length == 1) {
+                            this.nid += '0' + rawData[_i].toString(16);
+                        } else {
+                            this.nid += rawData[_i].toString(16);
+                        }
                     }
 
                     if (_i >= 23 && _i <= 28) {
-                        this.bid += rawData[_i].toString(16);
+                        if (rawData[_i].toString(16).length == 1) {
+                            this.bid += '0' + rawData[_i].toString(16);
+                        } else {
+                            this.bid += rawData[_i].toString(16);
+                        }
                     }
 
                     if (_i >= 29 && _i <= 30) {
-                        this.rfu += rawData[_i].toString(16);
+                        if (rawData[_i].toString(16).length == 1) {
+                            this.rfu += '0' + rawData[_i].toString(16);
+                        } else {
+                            this.rfu += rawData[_i].toString(16);
+                        }
                     }
 
                 }
-
-                // console.log('id = ' + this.id);
-                // console.log('rssi = ' + this.rssi);
-                // console.log('name = ' + this.name);
-                // console.log('frametype = ' + this.frametype);
-                // console.log('rangingData = ' + this.rangingData);
-                // console.log('nid = ' + this.nid);
-                // console.log('bid = ' + this.bid);
-                // console.log('rfu = ' + this.rfu);                
+               
             }
             this.updateBeaconsArray();
         });
