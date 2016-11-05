@@ -6,6 +6,7 @@ export class Machine {
     description: string;
     countBeacons: number;
     assignedBeacons: any;
+    rssi: any;
 
     constructor(id: number, name: string, type: string, description: string) {
         this.id = id;

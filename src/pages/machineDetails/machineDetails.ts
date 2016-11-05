@@ -124,9 +124,10 @@ export class MachineDetailsPage extends Pagebase {
 
         for (var _i = 0; _i < this.machines.length; _i++) {
 
-            if (this.machines[_i].id === this.selectedMachine.id) {
+            if (this.machines[_i].id == this.selectedMachine.id) {
 
                 this.machines[_i].assignedBeacons[0].isDummy = true;
+                this.machines[_i].assignedBeacons[0].rssi = 0;
                 break;
 
             }
@@ -147,9 +148,10 @@ export class MachineDetailsPage extends Pagebase {
 
         for (var _i = 0; _i < this.machines.length; _i++) {
 
-            if (this.machines[_i].id === this.selectedMachine.id) {
+            if (this.machines[_i].id == this.selectedMachine.id) {
 
                 this.machines[_i].assignedBeacons[1].isDummy = true;
+                this.machines[_i].assignedBeacons[1].rssi = 0;
                 break;
 
             }
