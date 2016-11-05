@@ -184,4 +184,24 @@ export class MachineDetailsPage extends Pagebase {
         // Navigate back
         this.navCtrl.pop();
     }
+
+    ionViewWillEnter() {
+
+        NativeStorage.getItem('savedMachines')
+            .then(data => {
+                
+                this.machines = data;
+
+                for (var _i = 0; _i < this.machines.length; _i++) {
+
+                    if (this.machines[_i].id === this.selectedMachine.id) {
+
+                        this.beacon1 = this.machines[_i].assignedBeacons[0] as Beacon;
+                        this.beacon2 = this.machines[_i].assignedBeacons[1] as Beacon;
+                        break;
+                    }
+                }
+            },
+            error => console.log(error));
+    }
 } 
