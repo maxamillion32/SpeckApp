@@ -64,7 +64,7 @@ export class BeaconsPage extends Pagebase {
     return new Date(dateTimeDelta);
   }
 
-  chooseMachine(beacon) {
+  chooseMachine() {
     let modal = this.modalCtrl.create(MachineModalPage, { "beacon": this.selectedBeacons });
     modal.present();
     this.selectedBeacons = [];
