@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-
 import { NavController, LoadingController, AlertController } from 'ionic-angular';
 import { Machine } from '../../models/machine';
+import { Beacon } from '../../models/beacon';
+import { MachineDetailsPage } from '../machineDetails/machineDetails';
 import { Pagebase } from '../base/pageBase';
+import { NativeStorage } from 'ionic-native';
 
 @Component({
   selector: 'page-machines',
@@ -11,21 +13,54 @@ import { Pagebase } from '../base/pageBase';
 export class MachinesPage extends Pagebase {
 
   machines: any;
+  selectedMachine: Machine;
 
+  /** Constructor */
   constructor(public navCtrl: NavController, loadingCtrl: LoadingController, alertCtrl: AlertController) {
-    super(loadingCtrl, alertCtrl)
-    this.machines = [];
-    this.createSampleData();
-  }
+    super(loadingCtrl, alertCtrl);
 
-  createSampleData() {
-    for (var i = 0; i < 10; i++) {
-      let machine = new Machine(i, "Machine " + i, i % 2);
-      this.machines.push(machine);
-    }
+    this.machines = [];
+
+    // Load all machines from native device storage
+    NativeStorage.getItem('savedMachines')
+      .then(data => {
+        console.log('Machines retrieved!');
+        this.machines = data;
+      },
+
+      // In case of error, initialize 'savedMachines' item 
+      error => NativeStorage.setItem('savedMachines', this.machines)
+        .then(() => {
+          console.log('Machines stored!');
+        },
+        error => console.error('Error storing item: ', error)));
+
   }
 
   addMachine() {
-    this.saveItem("machine", new Machine(1, "Machine", 2));
+
+    let itemIndex = this.machines.length + 1;
+    let selectedMachine = new Machine(itemIndex, "Neu " + itemIndex, "Typ " + itemIndex, "This is a new machine..");
+    selectedMachine.assignedBeacons.push(new Beacon("Dummy", "Dummy", 0, "", "", "", "", "", true));
+    selectedMachine.assignedBeacons.push(new Beacon("EchterBeacon", "EchterTyp", 0, "", "", "", "", "", false));
+
+    this.navCtrl.push(MachineDetailsPage, { machine: selectedMachine, isNew: true });
+
+  }
+
+  navigateToMachineDetails(machine: Machine) {
+
+    this.navCtrl.push(MachineDetailsPage, { machine: machine, isNew: false });
+  }
+
+  ionViewWillEnter() {
+
+    NativeStorage.getItem('savedMachines')
+      .then(data => {
+        console.log('Machines retrieved!');
+        this.machines = data;
+      },
+      error => console.log(error));
+
   }
 }

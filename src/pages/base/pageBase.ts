@@ -4,7 +4,7 @@ import { NativeStorage } from 'ionic-native';
 export abstract class Pagebase {
 
     constructor(private loadingCtrl: LoadingController,
-        private alertCtrl: AlertController) { }
+        protected alertCtrl: AlertController) { }
 
     showLoadingCtrl(message: string, duration: number) {
 

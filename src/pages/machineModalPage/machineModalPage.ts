@@ -24,7 +24,7 @@ export class MachineModalPage extends Pagebase {
         this.maxBeacons = 2;
 
         for (var i = 0; i < 10; i++) {
-            let machine = new Machine(i, "Machine " + i, i % 3);
+            let machine = new Machine(i, "Machine " + i, "", "");
             this.machines.push(machine);
         }
     }

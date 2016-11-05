@@ -160,7 +160,7 @@ export class BeaconService {
     updateBeaconsArray() {
 
         if (this.beacons.length == 0) {
-            let beacon = new Beacon(this.id, this.name, this.rssi, this.frametype, this.rangingData, this.nid, this.bid, this.rfu);
+            let beacon = new Beacon(this.id, this.name, this.rssi, this.frametype, this.rangingData, this.nid, this.bid, this.rfu, false);
             this.beacons.push(beacon);
         }
 
@@ -183,7 +183,7 @@ export class BeaconService {
         }
 
         if (!beaconIsAvailable) {
-            let beacon = new Beacon(this.id, this.name, this.rssi, this.frametype, this.rangingData, this.nid, this.bid, this.rfu);
+            let beacon = new Beacon(this.id, this.name, this.rssi, this.frametype, this.rangingData, this.nid, this.bid, this.rfu, false);
             this.beacons.push(beacon);
         }
     }

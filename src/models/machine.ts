@@ -2,11 +2,16 @@
 export class Machine {
     id: number;
     name: string;
+    type: string;
+    description: string;
     countBeacons: number;
-    
-    constructor(id: number, name: string, countBeacons: number) {        
+    assignedBeacons: any;
+
+    constructor(id: number, name: string, type: string, description: string) {
         this.id = id;
         this.name = name;
-        this.countBeacons = countBeacons;
+        this.type = type;
+        this.description = description;
+        this.assignedBeacons = [];
     }
 }

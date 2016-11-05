@@ -6,6 +6,7 @@ import { BeaconsPage } from '../pages/beacons/beacons';
 import { MachinesPage } from '../pages/machines/machines';
 import { TabsPage } from '../pages/tabs/tabs';
 import { MachineModalPage } from '../pages/machineModalPage/machineModalPage';
+import { MachineDetailsPage } from '../pages/machineDetails/machineDetails';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { MachineModalPage } from '../pages/machineModalPage/machineModalPage';
     BeaconsPage,
     MachinesPage,
     TabsPage,
-    MachineModalPage
+    MachineModalPage,
+    MachineDetailsPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -26,7 +28,8 @@ import { MachineModalPage } from '../pages/machineModalPage/machineModalPage';
     BeaconsPage,
     MachinesPage,
     TabsPage,
-    MachineModalPage
+    MachineModalPage,
+    MachineDetailsPage
   ],
   providers: []
 })
