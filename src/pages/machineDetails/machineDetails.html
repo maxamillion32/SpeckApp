@@ -45,7 +45,7 @@
 					<ion-card-header>
 						<ion-item *ngIf="!beacon1.isDummy">
 							<ion-icon name="disc" item-left > {{beacon1.id}}</ion-icon>
-							<button ion-button clear icon-only item-right >
+							<button ion-button clear icon-only item-right (click)="removeFirstBeaconFromMachine()">
         				<ion-icon name="trash"></ion-icon>
       				</button>
 						</ion-item>
@@ -65,7 +65,7 @@
 					<ion-card-header>
 						<ion-item *ngIf="!beacon2.isDummy">
 							<ion-icon name="disc" item-left> {{beacon2.id}}</ion-icon>
-							<button ion-button clear icon-only item-right>
+							<button ion-button clear icon-only item-right (click)="removeSecondBeaconFromMachine()">
         				<ion-icon name="trash"></ion-icon>
       				</button>
 						</ion-item>
