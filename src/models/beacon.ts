@@ -15,7 +15,7 @@ export class Beacon {
 
     constructor(id: string, name: string, rssi: number, frameType: string, rangingData: string, nid: string, bid: string, rfu: string) {
         this.id = id;
-        this.name = name == null ? '<Noname beacon>' : name;
+        this.name = name == null ? 'N/A' : name;
         this.rssi = rssi;
         this.frameType = frameType;
         this.rangingData = rangingData;

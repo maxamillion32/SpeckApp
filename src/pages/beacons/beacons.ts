@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController, AlertController, ActionSheetController } from 'ionic-angular';
-import { Beacon } from '../../models/beacon';
+import { NavController, LoadingController, AlertController, ActionSheetController, ModalController } from 'ionic-angular';
 import { Pagebase } from '../base/pageBase';
 import { BeaconService } from '../../services/beaconService';
+import { MachineModalPage } from '../machineModalPage/machineModalPage';
 
 @Component({
   selector: 'page-beacons',
@@ -13,15 +13,23 @@ export class BeaconsPage extends Pagebase {
 
   beacons: any;
   icons: any;
+  visibleBeacons: any;
+  selectedBeacons: any;
+  maxBeacons: number;
 
   constructor(public navCtrl: NavController,
     loadingCtrl: LoadingController,
     alertCtrl: AlertController,
     private actionSheetCtrl: ActionSheetController,
-    private beaconService: BeaconService) {
+    private beaconService: BeaconService,
+    private modalCtrl: ModalController) {
 
     super(loadingCtrl, alertCtrl);
     this.beacons = [];
+    this.visibleBeacons = [];
+    this.selectedBeacons = [];
+    this.maxBeacons = 2;
+
     this.icons = 'something';
 
     this.startScanBeacons();
@@ -56,32 +64,53 @@ export class BeaconsPage extends Pagebase {
     return new Date(dateTimeDelta);
   }
 
-  onSwipe(beacon: Beacon) {
-    console.log('swiped');
-    console.log(JSON.stringify(beacon));
+  chooseMachine(beacon) {
+    let modal = this.modalCtrl.create(MachineModalPage, { "beacon": this.selectedBeacons });
+    modal.present();
+    this.selectedBeacons = [];
   }
 
-  addBeaconToMachine() {
-    let machines = [];
-    let selectedMachine;
-    machines.push("Machine1");
-    machines.push("Machine2");
-
-    let buttons = [];
-    for (let machine of machines) {
-      buttons.push({
-        text: machine,
-        handler: () => {
-          selectedMachine = machine;
-        }
-      });
+  toggleVisibility(beacon) {
+    var index = this.visibleBeacons.indexOf(beacon);
+    if (index === -1) {
+      this.visibleBeacons.push(beacon);
     }
+    else {
+      this.visibleBeacons.splice(index, 1);
+    }
+  }
 
+  isBeaconInformationVisible(beacon) {
+    if (this.visibleBeacons.indexOf(beacon) === -1)
+      return false;
+    else
+      return true;
+  }
 
-    let actionSheet = this.actionSheetCtrl.create({
-      title: 'Choose a machine.',
-      buttons: buttons
-    });
-    actionSheet.present();
+  toggleSelection(beacon) {
+    var index = this.selectedBeacons.indexOf(beacon);
+    if (index === -1) {
+      if (!this.areMaxBeaconsSelected()) {
+        this.selectedBeacons.push(beacon);
+      }
+    }
+    else {
+      this.selectedBeacons.splice(index, 1);
+    }
+  }
+
+  isAnyBeaconSelected() {
+    return this.selectedBeacons.length > 0;
+  }
+
+  isBeaconSelected(beacon) {
+    if (this.selectedBeacons.indexOf(beacon) === -1)
+      return false;
+    else
+      return true;
+  }
+
+  areMaxBeaconsSelected() {
+    return this.selectedBeacons.length >= this.maxBeacons;
   }
 }

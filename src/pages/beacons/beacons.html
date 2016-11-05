@@ -1,72 +1,112 @@
 <ion-header>
-	<!--<ion-navbar>
-		<ion-title>Beacon-Verwaltung</ion-title>
-	</ion-navbar>-->
 	<ion-toolbar>
 		<ion-title>Beacons</ion-title>
-		<!--<ion-buttons start>
-			<button ion-button color="primary" icon-only (click)="startScanBeacons()">
-        		<ion-icon name="refresh"></ion-icon>
-      		</button>
-		</ion-buttons>-->
 	</ion-toolbar>
+	<!--<ion-searchbar fab-fixed placeholder="Suche nach NId..." [showCancelButton]="true"></ion-searchbar>-->
 </ion-header>
 
 <ion-content padding>
+
+	<ion-fab right bottom *ngIf="isAnyBeaconSelected()">
+		<button ion-fab color="primary" (click)="chooseMachine()">
+    <ion-icon name="add"></ion-icon>
+          <ion-icon name="cog"></ion-icon>
+        </button>
+	</ion-fab>
 
 	<ion-list>
 
 		<ion-card *ngFor="let beacon of beacons" (swipe)="onSwipe(beacon)">
 
-			<ion-card-header>
-				<ion-item>
+			<ion-item>
+
+				<ion-item (click)="toggleVisibility(beacon);">
 					<ion-icon color="{{beacon.getColor()}}" name="disc" item-left large></ion-icon>
-					<h2 color="{{beacon.getColor()}}">{{beacon.uniqueId}}</h2>
+					<h2 color="{{beacon.getColor()}}">{{beacon.nid}} - {{beacon.bid}}</h2>
 				</ion-item>
+				<button ion-button icon-only clear item-right *ngIf="!isBeaconSelected(beacon) && !areMaxBeaconsSelected()" (click)="toggleSelection(beacon)">
+     <ion-icon name="checkmark-circle-outline" item-right large></ion-icon>
+    </button>
+				<button ion-button icon-only clear item-right *ngIf="!isBeaconSelected(beacon) && areMaxBeaconsSelected()">
+     <ion-icon color="secondary" name="close-circle" item-right large></ion-icon>
+    </button>
+				<button ion-button icon-only clear item-right *ngIf="isBeaconSelected(beacon)" (click)="toggleSelection(beacon)">
+     <ion-icon name="checkmark-circle" item-right large></ion-icon>
+    </button>
 
-				<ion-item [hidden]="beacon.isReachable">
-					<ion-icon name="close-circle" color="danger" item-left></ion-icon>
-					<p>Not reachable!</p>
-				</ion-item>
-			</ion-card-header>
+			</ion-item>
 
-			<ion-card-content>
-				<ion-item>
-					<ion-icon name="wifi" item-left></ion-icon>
-					<p>{{beacon.rssi}}</p>
-				</ion-item>
+			<ion-card-content *ngIf="isBeaconInformationVisible(beacon)">
+				<hr/>
+				<ion-list>
+					<ion-row>
+						<ion-col width-33>
+							Namespace-Id:
+						</ion-col>
+						<ion-col width-67>
+							{{beacon.nid}}
+						</ion-col>
+					</ion-row>
 
-				<ion-item>
-					<h2>Namespace-Id:</h2>
-					<p>{{beacon.nid}}</p>
-				</ion-item>
+					<ion-row>
+						<ion-col width-33>
+							Instance-Id:
+						</ion-col>
+						<ion-col width-67>
+							{{beacon.bid}}
+						</ion-col>
+					</ion-row>
 
-				<ion-item>
-					<h2>Instance-Id:</h2>
-					<p>{{beacon.bid}}</p>
-				</ion-item>
+					<ion-row>
+						<ion-col width-33>
+							Physical Id:
+						</ion-col>
+						<ion-col width-67>
+							{{beacon.id}}
+						</ion-col>
+					</ion-row>
 
-				<ion-item>
-					<ion-icon name="time"></ion-icon>
-					<p>{{beacon.lastUpdated}}</p>
-				</ion-item>
+					<ion-row>
+						<ion-col width-33>
+							Name:
+						</ion-col>
+						<ion-col width-67>
+							{{beacon.name}}
+						</ion-col>
+					</ion-row>
 
-				<ion-fab right>
-					<button ion-fab>
-						<ion-icon name="menu"></ion-icon>
-					</button>
+					<ion-row>
+						<ion-col width-33>
+							TxPower:
+						</ion-col>
+						<ion-col width-67>
+							{{beacon.rangingData}}
+						</ion-col>
+					</ion-row>
 
-					<ion-fab-list side="top">
-						<button ion-fab color="secondary" (click)="addBeaconToMachine()">
-							<ion-icon name="add"></ion-icon>
-						</button>
-					</ion-fab-list>
-				</ion-fab>
+					<ion-row>
+						<ion-col width-33>
+							RSSI:
+						</ion-col>
+						<ion-col width-67>
+							{{beacon.rssi}}
+						</ion-col>
+					</ion-row>
 
+				</ion-list>
 			</ion-card-content>
-
 		</ion-card>
-
 	</ion-list>
+
+	<!--<ion-fab bottom right>
+  <button ion-fab>
+   <ion-icon name="menu"></ion-icon>
+  </button>
+   <ion-fab-list side="top">
+    <button ion-fab color="danger" (click)="onDelete()">
+    <ion-icon name="trash"></ion-icon>
+   </button>
+   </ion-fab-list>
+   </ion-fab>-->
 
 </ion-content>
