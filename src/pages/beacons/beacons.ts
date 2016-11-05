@@ -40,7 +40,7 @@ export class BeaconsPage extends Pagebase {
 
     setInterval(() => {
       this.beacons = this.beaconService.scanForBeacons();
-    }, 200);
+    }, 2000);
 
   }
 
