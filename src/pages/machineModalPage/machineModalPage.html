@@ -13,12 +13,12 @@
 </ion-header>
 
 <ion-content>
-    <ion-item>
+    <!--<ion-item>
         <button ion-button icon-left block (click)="createMachineWithBeacons();">
             <ion-icon name="add"></ion-icon>
             Neue Maschine erstellen
         </button>
-    </ion-item>
+    </ion-item>-->
     <ion-list>
         <div *ngFor="let machine of machines">
             <button ion-item *ngIf="hasMachineEnoughBeaconSpots(machine);" (click)="addBeaconsToMachine(machine);">

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, AlertController, ViewController } from 'ionic-angular';
 import { Pagebase } from '../base/pageBase';
-import { Machine } from '../../models/machine';
+import { NativeStorage } from 'ionic-native';
 
 @Component({
     selector: 'page-machinemodal',
@@ -14,7 +14,11 @@ export class MachineModalPage extends Pagebase {
 
     maxBeacons: number;
 
-    constructor(public navCtrl: NavController, loadingCtrl: LoadingController, alertCtrl: AlertController, public viewCtrl: ViewController, private _navParams: NavParams) {
+    constructor(public navCtrl: NavController,
+        loadingCtrl: LoadingController,
+        alertCtrl: AlertController,
+        public viewCtrl: ViewController,
+        private _navParams: NavParams, ) {
         super(loadingCtrl, alertCtrl);
 
         //Testdaten erstellen
@@ -23,10 +27,14 @@ export class MachineModalPage extends Pagebase {
 
         this.maxBeacons = 2;
 
-        for (var i = 0; i < 10; i++) {
-            let machine = new Machine(i, "Machine " + i, "", "");
-            this.machines.push(machine);
-        }
+        NativeStorage.getItem("savedMachines").then((data) => {
+            this.machines = data;
+        });
+
+        // for (var i = 0; i < 10; i++) {
+        //     let machine = new Machine(i, "Machine " + i, "", "");
+        //     this.machines.push(machine);
+        // }
     }
 
     hasMachineEnoughBeaconSpots(machine) {
@@ -39,15 +47,32 @@ export class MachineModalPage extends Pagebase {
     }
 
     addBeaconsToMachine(machine) {
-        console.log('Machine: ' + machine.name);
-        for (var i = 0; i < this.beacons.length; i++)
-            console.log('Beacon ' + (i + 1) + ": " + this.beacons[i].nid);
-        this.viewCtrl.dismiss();
-    }
 
-    createMachineWithBeacons() {
-        for (var i = 0; i < this.beacons.length; i++)
-            console.log('Beacon ' + (i + 1) + ": " + this.beacons[i].nid);
+        console.log(JSON.stringify(this.beacons));
+        console.log('Machine: ' + machine.name);
+
+        for (let beacon of this.beacons) {
+
+            if (machine.assignedBeacons[0].isDummy) {
+                machine.assignedBeacons[0] = beacon;
+                continue;
+            }
+
+            if (machine.assignedBeacons[1].isDummy) {
+                machine.assignedBeacons[1] = beacon;
+            }
+        }
+
+        // Persist the new machine to the machines-array.
+        for (var i = 0; i < this.machines.length; i++) {
+
+            if (this.machines[i].id == machine.id) {
+                this.machines[i] = machine;
+            }
+        }
+
+        NativeStorage.setItem("savedMachines", this.machines);
+
         this.viewCtrl.dismiss();
     }
 
