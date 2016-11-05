@@ -5,6 +5,7 @@ import { Beacon } from '../../models/beacon';
 import { MachineDetailsPage } from '../machineDetails/machineDetails';
 import { Pagebase } from '../base/pageBase';
 import { NativeStorage } from 'ionic-native';
+import { Platform } from 'ionic-angular';
 
 @Component({
   selector: 'page-machines',
@@ -16,25 +17,29 @@ export class MachinesPage extends Pagebase {
   selectedMachine: Machine;
 
   /** Constructor */
-  constructor(public navCtrl: NavController, loadingCtrl: LoadingController, alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, loadingCtrl: LoadingController, alertCtrl: AlertController, platform: Platform) {
     super(loadingCtrl, alertCtrl);
 
-    this.machines = [];
+    platform.ready().then(() => {
 
-    // Load all machines from native device storage
-    NativeStorage.getItem('savedMachines')
-      .then(data => {
-        console.log('Machines retrieved!');
-        this.machines = data;
-      },
 
-      // In case of error, initialize 'savedMachines' item 
-      error => NativeStorage.setItem('savedMachines', this.machines)
-        .then(() => {
-          console.log('Machines stored!');
+
+      this.machines = [];
+
+      // Load all machines from native device storage
+      NativeStorage.getItem('savedMachines')
+        .then(data => {
+          console.log('Machines retrieved!');
+          this.machines = data;
         },
-        error => console.error('Error storing item: ', error)));
 
+        // In case of error, initialize 'savedMachines' item 
+        error => NativeStorage.setItem('savedMachines', this.machines)
+          .then(() => {
+            console.log('Machines stored!');
+          },
+          error => console.error('Error storing item: ', error)));
+    });
   }
 
   addMachine() {
