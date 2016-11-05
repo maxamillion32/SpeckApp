@@ -43,7 +43,7 @@ export class MachinesPage extends Pagebase {
 
     setInterval(() => {
       this.updateMachinesRssiInformation();
-    }, 5000);
+    }, 1000);
   }
 
   updateMachinesRssiInformation() {
@@ -81,7 +81,7 @@ export class MachinesPage extends Pagebase {
           let beacon2Rssi = 0;
 
           if (beacon1 != undefined && beacon2 != undefined) {
-            machine.rssi = (beacon1Rssi + beacon2Rssi) / 2;
+            machine.rssi = (beacon1.rssi + beacon2.rssi) / 2;
           }
 
           else if (beacon1 != undefined && beacon2 == undefined) {

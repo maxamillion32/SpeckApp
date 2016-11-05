@@ -15,4 +15,14 @@ export class Machine {
         this.description = description;
         this.assignedBeacons = [];
     }
+
+    getColor() {
+        if (this.rssi > -65) {
+            return "secondary";
+        }
+        if (this.rssi > -80) {
+            return "yellow";
+        }
+        return "danger";
+    }
 }

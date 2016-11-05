@@ -8,9 +8,6 @@
 
 	<ion-list>
 		<ion-item *ngFor="let machine of machines">
-			<ion-avatar item-left>
-				<ion-icon name="radio-button-on" class="custom-icon"></ion-icon>
-			</ion-avatar>
 			<h2>{{machine.name}}</h2>
 			<h2>{{machine.rssi}}</h2>
 			<button ion-button clear item-right (click)="navigateToMachineDetails(machine)">Open ...</button>
