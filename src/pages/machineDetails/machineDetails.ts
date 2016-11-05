@@ -183,6 +183,5 @@ export class MachineDetailsPage extends Pagebase {
 
         // Navigate back
         this.navCtrl.pop();
-
     }
 } 

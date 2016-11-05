@@ -72,7 +72,6 @@ export class MachineModalPage extends Pagebase {
         }
 
         NativeStorage.setItem("savedMachines", this.machines);
-
         this.viewCtrl.dismiss();
     }
 
