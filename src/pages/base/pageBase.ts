@@ -34,7 +34,7 @@ export abstract class Pagebase {
             error => console.error('Error storing item: ', error));
     }
 
-    deleteItem(key: string) {
+    getItem(key: string) {
         NativeStorage.getItem(key)
             .then(data => {
                 console.log('Got item: ' + key);

@@ -12,11 +12,8 @@ export class TabsPage {
   // should be each tab's root Page
   tab1Root: any = HomePage;
   tab2Root: any = BeaconsPage;
-  tab3Root: any = MachinesPage;
+  tab3Root: any = MachinesPage;  
 
-  countBeacons: number;
-
-  constructor() {    
-    this.countBeacons = 10;
+  constructor() {
   }
 }

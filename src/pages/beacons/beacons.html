@@ -51,21 +51,22 @@
 					<p>{{beacon.lastUpdated}}</p>
 				</ion-item>
 
+				<ion-fab right>
+					<button ion-fab>
+						<ion-icon name="menu"></ion-icon>
+					</button>
+
+					<ion-fab-list side="top">
+						<button ion-fab color="secondary" (click)="addBeaconToMachine()">
+							<ion-icon name="add"></ion-icon>
+						</button>
+					</ion-fab-list>
+				</ion-fab>
+
 			</ion-card-content>
 
 		</ion-card>
 
 	</ion-list>
-
-	<ion-fab bottom right>
-		<button ion-fab>
-			<ion-icon name="menu"></ion-icon>
-		</button>
-		<ion-fab-list side="top">
-			<button ion-fab color="danger" (click)="onDelete()">
-				<ion-icon name="trash"></ion-icon>
-			</button>
-		</ion-fab-list>
-	</ion-fab>
 
 </ion-content>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController, AlertController } from 'ionic-angular';
+import { NavController, LoadingController, AlertController, ActionSheetController } from 'ionic-angular';
 import { Beacon } from '../../models/beacon';
 import { Pagebase } from '../base/pageBase';
 import { BeaconService } from '../../services/beaconService';
@@ -17,6 +17,7 @@ export class BeaconsPage extends Pagebase {
   constructor(public navCtrl: NavController,
     loadingCtrl: LoadingController,
     alertCtrl: AlertController,
+    private actionSheetCtrl: ActionSheetController,
     private beaconService: BeaconService) {
 
     super(loadingCtrl, alertCtrl);
@@ -60,20 +61,27 @@ export class BeaconsPage extends Pagebase {
     console.log(JSON.stringify(beacon));
   }
 
-  onDelete() {
-    this.showAlert("Delete", "Really delete?", [
-      {
-        text: 'Yes',
-        handler: data => {
-          console.log('Yes clicked');
+  addBeaconToMachine() {
+    let machines = [];
+    let selectedMachine;
+    machines.push("Machine1");
+    machines.push("Machine2");
+
+    let buttons = [];
+    for (let machine of machines) {
+      buttons.push({
+        text: machine,
+        handler: () => {
+          selectedMachine = machine;
         }
-      },
-      {
-        text: 'No',
-        handler: data => {
-          console.log('No clicked');
-        }
-      }
-    ]);
+      });
+    }
+
+
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Choose a machine.',
+      buttons: buttons
+    });
+    actionSheet.present();
   }
 }
