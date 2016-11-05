@@ -9,7 +9,7 @@ This project exclusively involves the usage of BLE-beacons that come with the Ed
 Follow the steps described at https://ionicframework.com/docs/v2/getting-started/installation/.
 Inside of the Project folder you have to install the dependencies with `npm install`.
 
-## Required Cordova plugins
+### Required Cordova plugins
 - cordova-plugin-ble-central 1.1.3 "BLE"
 - cordova-plugin-compat 1.1.0 "Compat"
 - cordova-plugin-console 1.0.4 "Console"
@@ -27,4 +27,8 @@ Open the Xcode project and deploy like a native Xcode project.
 
 ### Android
 `ionic build android` creates a android project inside the platforms folder.
+
+### Splash and icons
+You have to manually move your files  from *SpeckApp/resources/Hybrid-Icons/* into your platforms folder.
+
 
